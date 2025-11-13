@@ -94,7 +94,9 @@ export default async function handler(req, res) {
 
     // 4. Formata e retorna o resultado
     if (vagasFiltradas.length > 0) {
-      // Se houver vagas, retorna as vagas encontradas
+      // Se houver vagas, retorna a mensagem simples E a lista estruturada das vagas
+      
+      // 4.1 Mapeia e formata as vagas
       const vagasFormatadas = vagasFiltradas.map(vaga => ({
         nomeVaga: vaga.title || 'Não informado',
         beneficios: vaga.benefits ? vaga.benefits.replace(/<\/?p>/g, '').replace(/&nbsp;/g, ' ').trim() : 'Não informado',
@@ -103,15 +105,16 @@ export default async function handler(req, res) {
                  : 'A combinar',
         horario: vaga.description ? extrairHorario(vaga.description) : 'Não informado',
         cidade: `${vaga.city || 'Não informada'} - ${vaga.region || '??'}`,
-        // 'responsavel' não está na API original, mas será simulado para o retorno:
-        responsavel: 'AMX Consultoria de RH (via Quickin.io)'
+        // Responsável (buscando em owner_user_id.name, conforme o pedido anterior)
+        responsavel: vaga.owner_user_id && vaga.owner_user_id.name ? vaga.owner_user_id.name : 'AMX Consultoria de RH (via Quickin.io)'
       }));
 
+      // 4.2 Constrói a mensagem simples e singular/plural
+      const responseMessage = `Encontramos ${vagasFiltradas.length} vaga${vagasFiltradas.length === 1 ? '' : 's'} disponíveis para a cidade de ${cidadeCandidato}.`;
+
       return res.status(200).json({
-        response: vagasFiltradas.length === 1 
-          ? `Encontramos 1 vaga disponível para a cidade de ${cidadeCandidato}.`
-          : `Encontramos ${vagasFiltradas.length} vagas disponíveis para a cidade de ${cidadeCandidato}.`,
-        vagas: vagasFormatadas
+        response: responseMessage, // Mensagem simples
+        vagas_encontradas: vagasFormatadas // Lista estruturada das vagas
       });
     } else {
       // Caso nenhuma vaga seja encontrada, salva no banco de talentos e retorna a mensagem
@@ -120,7 +123,8 @@ export default async function handler(req, res) {
       await sendToTalentBank(req.body); 
 
       return res.status(200).json({
-        response: 'Infelizmente não há vagas disponíveis! Mas seu currículo será salvo em nosso banco de talentos e entraremos em contato quando surgir uma oportunidade'
+        // Mensagem corrigida e customizada para o banco de talentos
+        response: 'Infelizmente não há vagas disponíveis! Mas seu currículo será salvo em nosso banco de talentos e entraremos em contato quando surgir uma oportunidade.'
       });
     }
 
