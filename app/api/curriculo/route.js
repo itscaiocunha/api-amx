@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import mammoth from "mammoth";
-import pdfParse from "pdf-parse"; // 👈 agora usamos a v1, que é função
+import pdfParse from "pdf-parse-debugging-disabled";
 
 export const runtime = "nodejs"; // importante na Vercel
 

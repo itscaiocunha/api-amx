@@ -20,8 +20,8 @@ importers:
       next:
         specifier: 16.0.2
         version: 16.0.2(@babel/core@7.28.5)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      pdf-parse:
-        specifier: 1.1.1
+      pdf-parse-debugging-disabled:
+        specifier: ^1.1.1
         version: 1.1.1
       react:
         specifier: 19.2.0
@@ -1875,8 +1875,8 @@ packages:
     resolution: {integrity: sha512-Xa4Nw17FS9ApQFJ9umLiJS4orGjm7ZzwUrwamcGQuHSzDyth9boKDaycYdDcZDuqYATXw4HFXgaqWTctW/v1HA==}
     engines: {node: '>=16 || 14 >=14.18'}
 
-  pdf-parse@1.1.1:
-    resolution: {integrity: sha512-v6ZJ/efsBpGrGGknjtq9J/oC8tZWq0KWL5vQrk2GlzLEQPUDB1ex+13Rmidl1neNN358Jn9EHZw5y07FFtaC7A==}
+  pdf-parse-debugging-disabled@1.1.1:
+    resolution: {integrity: sha512-pTPktRvyvLSj9zIS9DcOKYKcR7qeTqqyMkWjgYV7YglBmA9yrDJ1/rATOpXQoT5QcXKDYjEt4BSmZkJBcP1JDw==}
     engines: {node: '>=6.8.1'}
 
   picocolors@1.1.1:
@@ -4284,7 +4284,7 @@ snapshots:
       lru-cache: 10.4.3
       minipass: 7.1.2
 
-  pdf-parse@1.1.1:
+  pdf-parse-debugging-disabled@1.1.1:
     dependencies:
       debug: 3.2.7
       node-ensure: 0.0.0
